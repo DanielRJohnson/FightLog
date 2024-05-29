@@ -4,7 +4,7 @@ name: run update_database.py
 
 on:
   schedule:
-    - cron: "0 8 */1 * *" # At 08:00 on every day-of-month.
+    - cron: "0 17 */1 * *" # At 08:00 on every day-of-month.
 
 jobs:
   build:
