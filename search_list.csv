@@ -1,0 +1,10 @@
+search_name,game,channel_id,channel_search_regex
+TNS Tekken 8,TEKKEN 8,UCu6S7Z0ln2llqNTLhRKFxJA,TEKKEN 8
+TNS SF6,Street Fighter 6,UCu6S7Z0ln2llqNTLhRKFxJA,Street Fighter 6
+TNS GBVSR,Granblue Fantasy Versus Rising,UCu6S7Z0ln2llqNTLhRKFxJA,(?=.*Granblue)(?=.*Rising)
+TNS GGST,Guilty Gear Strive,UCu6S7Z0ln2llqNTLhRKFxJA,(?=.*Guilty)(?=.*Gear)(?=.*Strive)
+Spooky Tekken 8,TEKKEN 8,UCjT9Hwh4twdfvFZCV1tIsCw,Tekken 8.*(Pools|Top 6|Top 8|Top 16|Top 24|Top 32)
+Spooky SF6,Street Fighter 6,UCjT9Hwh4twdfvFZCV1tIsCw,Street Fighter 6.*(Pools|Top 6|Top 8|Top 16|Top 24|Top 32)
+Spooky GBVSR,Granblue Fantasy Versus Rising,UCjT9Hwh4twdfvFZCV1tIsCw,(?=.*Granblue)(?=.*Rising).*(Pools|Top 6|Top 8|Top 16|Top 24|Top 32)
+Spooky GGST,Guilty Gear Strive,UCjT9Hwh4twdfvFZCV1tIsCw,(?=.*Guilty)(?=.*Gear)(?=.*Strive).*(Pools|Top 6|Top 8|Top 16|Top 24|Top 32)
+BNE Tekken 8,TEKKEN 8,UCKHx_yf3dI2ajWAjXRJ_9Rw,TWT 2024
