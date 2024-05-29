@@ -2,3 +2,4 @@ pandas==2.2.2
 streamlit==1.35.0
 thefuzz==0.22.1
 yt_dlp==2024.5.27
+SQLAlchemy==2.0.30
