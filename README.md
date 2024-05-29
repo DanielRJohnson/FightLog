@@ -11,6 +11,12 @@ FightLog allows you to:
 * Filter by channel.
 * Filter by date.
 
+## 10-Second Demo
+
+<p align="center">
+  <img src="https://github.com/DanielRJohnson/FightLog/assets/39017265/9ab27aeb-e6b7-450c-8f3d-d3bf59269e50" alt="FightLog Demo Gif"/>
+</p>
+
 ## Brief Technical Description
 
 The critical pieces of information that we gather are the chapter names of a YouTube video. For channels that use them, it tells us which players played, which characters they played, and when in the video they played. 
