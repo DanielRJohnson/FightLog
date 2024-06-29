@@ -19,6 +19,8 @@ def scrape_videos(channel_id: str, title_regex: str) -> list[dict]:
 def update_database(videos: list, game: str, conn: sqlite3.Connection) -> None:
     """ Given a list of videos, extract match info and update the database. """
     for vid in videos:
+        if vid is None:
+            continue
         for chapter in vid["chapters"] if vid["chapters"] else []:
             if "vs" not in chapter["title"]:
                 continue
