@@ -75,6 +75,7 @@ def create_page():
         """, unsafe_allow_html=True)
 
     st.markdown("# 📒 FightLog")
+    st.markdown("##### *Never go digging through descriptions again.*")
 
     # create radio buttons to filter by game
     all_games = sorted(get_all_games(), reverse=True)
