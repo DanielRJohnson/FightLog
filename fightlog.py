@@ -52,7 +52,7 @@ def filter_match_data(matches, char_filter, player_filter, channel_filter, date_
     if len(date_filter) == 2: # filter by date range
         matches = matches[(matches["VideoDate"] > date_filter[0]) & (matches["VideoDate"] < date_filter[1])]
 
-    return matches
+    return matches.copy()
     
 
 def create_page():
@@ -61,6 +61,18 @@ def create_page():
         page_title="FightLog",
         page_icon="📒"
     )
+
+    # change page formatting to fit more on the opening screen
+    st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 1.2rem;
+                    padding-bottom: 1rem;
+                    padding-left: 0rem;
+                    padding-right: 0rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
 
     st.markdown("# 📒 FightLog")
     st.markdown("##### *Never go digging through descriptions again.*")
@@ -83,7 +95,7 @@ def create_page():
     matches["p2Character"], matches["p2CharacterConfidence"] = zip(*matches["p2Character"].apply(clean_name))
 
     # split page into two columns
-    col1, col2 = st.columns(2)
+    col1, col2, col3, col4 = st.columns(4)
 
     # create a multiselect dropdown to filter by character
     all_chars = sorted(pd.concat([matches["p1Character"], matches["p2Character"]]).unique())
@@ -95,10 +107,10 @@ def create_page():
 
     # create a multiselect dropdown to filter by channel
     all_channels = sorted(matches["ChannelName"].unique())
-    channel_filter = col1.multiselect("Channels", all_channels, [])
+    channel_filter = col3.multiselect("Channels", all_channels, [])
 
     # create a date input to filter by a range of dates
-    date_filter = col2.date_input("Date Range", (matches["VideoDate"].min(), datetime.now()), format="MM/DD/YYYY")
+    date_filter = col4.date_input("Date Range", (matches["VideoDate"].min(), datetime.now()), format="MM/DD/YYYY")
 
     # actually filter the matches based on previously defined inputs
     filtered_matches = filter_match_data(matches, char_filter, player_filter, channel_filter, date_filter)
