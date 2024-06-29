@@ -17,12 +17,13 @@ def get_match_data(game_filter):
     command = f'SELECT * FROM Matches WHERE game="{game_filter}"'
     matches = conn.query(command)
 
-    matches["VideoDate"] = pd.to_datetime(matches["VideoDate"]).dt.date
     # the correct link with timecode is youtube.com/watch?v=<video_id>&t=<time_seconds>
     matches["Link"] = "https://youtube.com/watch?v=" + matches["VideoId"] + "&t=" + matches["ChapterBegin"].astype(str)
 
-    # only show these columns in this order
-    return matches
+    matches["VideoDate"] = pd.to_datetime(matches["VideoDate"]).dt.date
+    
+    # return and sort by VideoDate, then ChannelName, then Chapter by newest, alphabetical, latest in video
+    return matches.sort_values(["VideoDate", "ChannelName", "ChapterBegin"], ascending=[False, True, False])
 
 
 def clean_character_name(dirty_name, correct_character_names):
@@ -101,18 +102,23 @@ def create_page():
 
     # actually filter the matches based on previously defined inputs
     filtered_matches = filter_match_data(matches, char_filter, player_filter, channel_filter, date_filter)
+
+    # Create the match column for ease of viewing, similar to ChapterName, but normalized
+    p1s = filtered_matches["p1Name"] + " (" + filtered_matches["p1Character"] + ")"
+    p2s = filtered_matches["p2Name"] + " (" + filtered_matches["p2Character"] + ")"
+    filtered_matches["Match"] = p1s + " vs. " + p2s
     
     st.write(f"{len(filtered_matches):,} matches shown, with a most recent match on {filtered_matches['VideoDate'].max()}.")
 
-    # show the resulting dataframe with some chosen columns
-    chosen_columns = ["p1Name", "p1Character", "p2Name", "p2Character", 
-                      "Link", "VideoDate", "ChannelName", "VideoTitle", 
-                      "ChapterName", "p1CharacterConfidence", "p2CharacterConfidence"]
+    # only show these columns in this order
+    chosen_columns = ["Link", "Match", "VideoDate", "VideoTitle", "ChannelName", 
+                      "ChapterName", "p1Name", "p1Character", "p2Name", "p2Character", 
+                      "p1CharacterConfidence", "p2CharacterConfidence"]
 
     st.dataframe(
         filtered_matches[chosen_columns], 
         column_config={
-            "Link": st.column_config.LinkColumn("Link to Match")
+            "Link": st.column_config.LinkColumn("Link", display_text="Open Match")
         }, 
         hide_index=True
     )
