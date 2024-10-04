@@ -32,7 +32,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "updated database" --allow-empty)
+          git commit -a -m "updated database" || true
 
       - name: push changes
         uses: ad-m/github-push-action@v0.8.0
