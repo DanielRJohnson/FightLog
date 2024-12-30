@@ -27,18 +27,21 @@ jobs:
       - name: execute py script
         run: python update_database.py
 
-      - name: show git status before commit
-        run: git status
+      - name: show git status and log before commit
+        run: |
+          git status
+          git --no-pager log -p -1
 
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index HEAD || (git commit -a -m "updated database")
-
-      - name: show git status after commit
-        run: git status
+          git commit -a -m "updated database"
+          
+      - name: show git status and log after commit
+        run: |
+          git status
+          git --no-pager log -p -1
 
       - name: push changes
         uses: ad-m/github-push-action@v0.8.0
