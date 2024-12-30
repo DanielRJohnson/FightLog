@@ -1,7 +1,6 @@
 import os
 from multiprocessing import Pool
 import yt_dlp
-from yt_dlp.utils import DateRange
 import sqlite3
 from pandas import read_csv
 
@@ -10,7 +9,8 @@ from match import Match
 
 def scrape_videos(channel_id: str, title_regex: str) -> list[dict]:
     """ Search a YouTube channel for all videos matching a regex and return them. """
-    opts = {"ignoreerrors": True, "matchtitle": title_regex}
+    opts = {"ignoreerrors": True, "matchtitle": title_regex, 
+            "sleep_interval_requests": 0.2}
     with yt_dlp.YoutubeDL(opts) as ydl:
         uploads_playlist_id = channel_id.replace(
             "UC", "UU")  # UC is channel, UU is uploads
