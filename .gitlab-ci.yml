@@ -1,7 +1,16 @@
 image: python:3.12.8-slim-bookworm
 
+
 stages:
   - update_database
+
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never # never run on push. only manual, schedule, etc.
+    - when: always
+
 
 update:
   stage: update_database
@@ -15,8 +24,3 @@ update:
     - git add .
     - git commit -m "[CI] Update Database"
     - git push gitlab_origin HEAD:main -o ci.skip || true # allow no changes to pass
-  workflow:
-    rules:
-      - if: '$CI_PIPELINE_SOURCE == "push"'
-        when: never # never run on push. only manual, schedule, etc.
-      - when: always
