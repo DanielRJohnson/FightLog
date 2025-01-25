@@ -1,0 +1,22 @@
+image: python:3.12.8-slim-bookworm
+
+stages:
+  - update_database
+
+update:
+  stage: update_database
+  script:
+    - pip install -r requirements.txt
+    - python update_database.py
+    # https://stackoverflow.com/questions/51716044/how-do-i-push-to-a-repo-from-within-a-gitlab-ci-pipeline
+    - git config user.name "GitLab CI Pipeline"
+    - git config user.email "gitlabcipipeline@example.com"
+    - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@$GITLAB_URL
+    - git add .
+    - git commit -m "[CI] Update Database"
+    - git push gitlab_origin HEAD:main -o ci.skip || true # allow no changes to pass
+  workflow:
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push"'
+        when: never # never run on push. only manual, schedule, etc.
+      - when: always
