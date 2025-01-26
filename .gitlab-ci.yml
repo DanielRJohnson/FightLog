@@ -14,6 +14,8 @@ workflow:
 
 update:
   stage: update_database
+  before_script:
+    - apt-get update && apt-get install -y git
   script:
     - pip install -r requirements.txt
     - python update_database.py
