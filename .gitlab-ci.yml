@@ -23,7 +23,7 @@ update:
     # https://stackoverflow.com/a/73394648
     - git config user.name "GitLab CI Pipeline"
     - git config user.email "gitlabcipipeline@example.com"
-    - git remote -v | grep -w gitlab_origin || git remote add gitlab_origin http://oauth2:$ACCESS_TOKEN@$GITLAB_URL # add remote if not exists
-    - git add .
+    - git remote -v | grep -w gitlab_origin || git remote add gitlab_origin http://oauth2:$ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git # add remote if not exists
+    - git add matches.db
     - git commit -m "[CI] Update Database"
-    - git push gitlab_origin HEAD:main -o ci.skip || true # allow no changes to pass
+    - git push gitlab_origin HEAD:$CI_COMMIT_BRANCH -o ci.skip || true # allow no changes to pass
