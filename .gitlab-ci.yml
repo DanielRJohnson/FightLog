@@ -15,11 +15,12 @@ workflow:
 update:
   stage: update_database
   before_script:
-    - apt-get update && apt-get install -y git
+    - apt-get update && apt-get install -y git sqlite3
   script:
     - pip install -r requirements.txt
     - python update_database.py 2>error.log
     - grep -q "Sign in to confirm you’re not a bot." error.log && false # fail early if YouTube blocks us
+    - sqlite3 matches.db "SELECT COUNT(*) FROM Matches;" > match_count.txt
     # https://stackoverflow.com/a/73394648
     - git config user.name "GitLab CI Pipeline"
     - git config user.email "gitlabcipipeline@example.com"
@@ -28,3 +29,7 @@ update:
     - git add matches.db
     - git commit -m "[CI] Update Database"
     - git push gitlab_origin HEAD:$CI_COMMIT_BRANCH -o ci.skip || true # allow no changes to pass
+  artifacts:
+    paths:
+      - error.log
+      - match_count.txt
