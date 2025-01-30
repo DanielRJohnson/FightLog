@@ -27,7 +27,7 @@ update:
     - git remote rm gitlab_origin || true # force remove remote
     - git remote add gitlab_origin http://oauth2:$ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git # add remote 
     - git add matches.db
-    - git commit -m "[CI] Update Database"
+    - git commit --allow-empty -m "[CI] Update Database"
     - git push gitlab_origin HEAD:$CI_COMMIT_BRANCH -o ci.skip || true # allow no changes to pass
   artifacts:
     paths:
